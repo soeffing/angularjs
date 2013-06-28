@@ -25,4 +25,10 @@ angular.module('myApp.controllers', [])
   	     console.log(data,status, headers, config);
   	  });
   	}
+  }])
+  .controller('RegistrationCtrl', ['$scope', 'UserRegistration', function($scope, UserRegistration) {
+     $scope.user = new UserRegistration;
+     $scope.signup = function() {
+       $scope.user.$save();
+     };
   }]);
