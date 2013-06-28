@@ -7,13 +7,13 @@ angular.module('myApp.controllers', [])
   .controller('MyCtrl2', [function() {
 
   }])
-  .controller('LoginCtrl', ['$scope', '$http', function($scope, $http) {
+  .controller('LoginCtrl', ['$scope', '$http', 'API_URL', function($scope, $http, API_URL) {
   	$scope.user = {};
   	$scope.user.email = "";
   	$scope.user.password = "";
   	$scope.login = function() {
   	  console.log($scope.email);
-  	  var request = $http.post('http://localhost:3000/api/v1/users/sign_in.json', {user: {email: $scope.user.email, password: $scope.user.password }}).
+  	  var request = $http.post(API_URL + 'users/sign_in.json', {user: {email: $scope.user.email, password: $scope.user.password }}).
   	  success(function(data, status, headers, config) {
   	     // this callback will be called asynchronously
   	     // when the response is available
