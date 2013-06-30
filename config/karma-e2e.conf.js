@@ -6,17 +6,17 @@ files = [
   'test/e2e/**/*.js'
 ];
 
-autoWatch = false;
+autoWatch = true;
 
 browsers = ['Chrome'];
 
-singleRun = true;
+singleRun = false;
 
 proxies = {
   '/': 'http://localhost:8080/'
 };
 
-urlRoot = '/_karma_/'; 
+urlRoot = '/_karma_/';
 
 junitReporter = {
   outputFile: 'test_out/e2e.xml',

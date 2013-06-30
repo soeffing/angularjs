@@ -21,32 +21,22 @@ angular.module('myApp')
       .when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'})
       .otherwise({redirectTo: '/view1'});
   }])
-  .run(['$rootScope', '$http', 'TokenHandler', 'API_URL',
-  function( scope, $http, tokenHandler, API_URL ) {
-    scope.$on( 'event:authenticate',
-      function( event, email, password ) {
-        var payload = {
-          user: {
-            email: email,
-            password: password
-          }
-        };
-
-        var request = $http.post(API_URL + 'users/sign_in', payload).
-          success(function(data, status, headers, config) {
-        	 // this callback will be called asynchronously
-        	 // when the response is available
-        	 tokenHandler.set( data.authentication_token );
-        	 console.log(data);
-           }).
-        	 error(function(data, status, headers, config) {
-        	 // called asynchronously if an error occurs
-        	 // or server returns response with an error status.
-        	 console.log(data,status, headers, config);
-          });
-      }
-    );
-  }]);
+  .run(['$rootScope', '$http', 'TokenHandler', 'security',
+  function( scope, $http, tokenHandler, security ) {
+    scope.$on( 'event:authenticate',  function(event, user) {
+      security.login(event, user.email, user.password);
+    });
+    scope.$on( 'event:logout', function(event, user) {
+      var token = tokenHandler.get().token;
+      security.logout(event, token);
+    });
+     scope.isAuthenticated = security.isAuthenticated;
+     scope.$watch(function() {
+       return security.currentUser;
+     }, function(currentUser) {
+       scope.currentUser = currentUser;
+     });
+}]);
 
 
 

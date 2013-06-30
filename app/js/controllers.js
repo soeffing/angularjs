@@ -4,15 +4,17 @@ angular.module('myApp.controllers', [])
   .controller('MyCtrl1', [function() {
 
   }])
-  .controller('MyCtrl2', [function() {
-
+  .controller('NavCtrl', ['$scope', 'security', function($scope, security) {
+    $scope.logout = function() {
+      $scope.$emit('event:logout', $scope.user);
+  	}
   }])
   .controller('LoginCtrl', ['$scope', '$http', 'API_URL', function($scope, $http, API_URL) {
   	$scope.user = {};
-  	$scope.user.email = "";
-  	$scope.user.password = "";
+  	$scope.user.email = "ulrich_soeffing@gmx.de";
+  	$scope.user.password = "mysecret";
   	$scope.login = function() {
-  	  $scope.$emit('event:authenticate', $scope.user.email, $scope.user.password);
+  	  $scope.$emit('event:authenticate', $scope.user);
   	}
   }])
   .controller('RegistrationCtrl', ['$scope', 'UserRegistration', function($scope, UserRegistration) {

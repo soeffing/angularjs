@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My AngularJS App</title>
+  <title>Bettle.me</title>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
   <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
   <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
@@ -12,7 +12,7 @@
   <!-- endbuild -->
 </head>
 <body>
-  <div ng-include="'tpls/nav.tpl.html'" class="navbar" controller="NavController"></div>
+  <div ng-include="'tpls/nav.tpl.html'" class="navbar" ng-controller="NavCtrl"> <navibar></navibar> </div>
 
   <div ng-view></div>
 

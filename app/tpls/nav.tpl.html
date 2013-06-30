@@ -1,33 +1,35 @@
 <div class="navbar-inner">
-      <div class="container">
-
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </a>
-
-        <!-- Be sure to leave the brand out there if you want it shown -->
-        <a class="brand" href="#">Bettle.me</a>
-
-        <!-- Everything you want hidden at 940px or less, place within here -->
-        <div class="nav-collapse collapse navbar-responsive-collapse">
-          <!-- .nav, .navbar-search, .navbar-form, etc -->
-          <ul class="nav">
-            <li><a href="">My Bets</a></li>
-            <li><a href="#/myaccount">My Account</a></li>
-            <li><a href="#">Payments & Deposits</a></li>
-          </ul>
-          <ul class="nav pull-right">
-            <li>
-              <a href="#loginModal" role="button" data-toggle="modal">Login</a>
-            </li>
-            <li>
-              <a href="#signupModal" role="button" data-toggle="modal">Sign Up</a>
-            </li>
-          </ul>
-        </div>
-
-      </div>
+  <div class="container">
+    <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+    <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </a>
+    <!-- Be sure to leave the brand out there if you want it shown -->
+    <a class="brand" href="#">Bettle.me</a>
+    <!-- Everything you want hidden at 940px or less, place within here -->
+    <div class="nav-collapse collapse navbar-responsive-collapse">
+      <!-- .nav, .navbar-search, .navbar-form, etc -->
+      <ul class="nav" ng-show="isAuthenticated()">
+        <li><a href="">My Bets</a></li>
+        <li><a href="#/myaccount">My Account</a></li>
+        <li><a href="#">Payments & Deposits</a></li>
+      </ul>
+      <ul class="nav pull-right">
+        <li ng-hide="isAuthenticated()">
+          <a href="#loginModal" role="button" data-toggle="modal">Login</a>
+        </li>
+        <li ng-hide="isAuthenticated()">
+          <a href="#signupModal" role="button" data-toggle="modal">Sign Up</a>
+        </li>
+        <li ng-show="isAuthenticated()">
+          <a href="#" role="button">Hello User</a>
+        </li>
+        <li ng-show="isAuthenticated()">
+          <button ng-click="logout()" class="btn btn-primary">Logout</button>
+        </li>
+      </ul>
     </div>
+  </div>
+</div>
