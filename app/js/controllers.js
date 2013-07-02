@@ -5,17 +5,24 @@ angular.module('myApp.controllers', [])
 
   }])
   .controller('RootCtrl', ['$scope', 'errorService', function($scope, errorService) {
+    // reference to errorService
     $scope.errorService = errorService;
   }])
-  .controller('NavCtrl', ['$scope', 'security', function($scope, security) {
+  .controller('NavCtrl', ['$scope', 'security', '$rootScope', 'ngI18nResourceBundle', function($scope, security, $rootScope, ngI18nResourceBundle) {
     $scope.logout = function() {
       $scope.$emit('event:logout', $scope.user);
   	}
+
+    $scope.setLocale = function(locale){
+      ngI18nResourceBundle.get({locale: locale}).success(function (resourceBundle) {
+            $rootScope.lang = resourceBundle;
+        });
+    }
   }])
   .controller('LoginCtrl', ['$scope', '$http', 'API_URL', function($scope, $http, API_URL) {
   	$scope.user = {};
-  	$scope.user.email = "ulrich_soeffing@gmx.de";
-  	$scope.user.password = "mysecret";
+  	//$scope.user.email = "ulrich_soeffing@gmx.de";
+  	// $scope.user.password = "mysecret";
   	$scope.login = function() {
   	  $scope.$emit('event:authenticate', $scope.user);
   	}

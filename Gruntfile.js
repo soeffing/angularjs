@@ -22,6 +22,7 @@ module.exports = function(grunt) {
       livereload: {
         files: [
           '<%= myApp.app %>/{,*/}*.html',
+          //'<%= myApp.app %>/i18n/js/{,*/}*.json',
           '{.tmp,<%= myApp.app %>}/css/{,*/}*.css',
           '{.tmp,<%= myApp.app %>}/js/{,*/}*.js',
           '<%= myApp.app %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
@@ -160,6 +161,7 @@ module.exports = function(grunt) {
         files: {
           src: [
             '<%= myApp.dist %>/js/{,*/}*.js',
+            '<%= myApp.dist %>/i18n/{,*/}*.json',
             '<%= myApp.dist %>/css/{,*/}*.css',
             '<%= myApp.dist %>/img/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
             '<%= myApp.dist %>/css/fonts/*'

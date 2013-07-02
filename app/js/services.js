@@ -129,10 +129,10 @@ angular.module('myApp.services', [])
         errorService.clear();
         return response;
        }, function (response) {
-       	console.log(response);
+
          if (response.status === 401) {
            console.log('401 status');
-           errorService.setError('Wrong email or password! Please try again.');
+           errorService.setError($rootScope.lang.errors_login);
            $rootScope.$broadcast('event:loginRequired', response.data);
          } else if (response.status >= 400 && response.status < 500) {
            errorService.setError('Server was unable to find what you were looking for... Sorry!!');

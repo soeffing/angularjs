@@ -1,0 +1,12 @@
+{
+    "language": "Language",
+    "sign_up": "Sign Up",
+    "login": "Login",
+    "email": "E-mail",
+	"password": "Password",
+	"password_conf": "Password Confirmation",
+	"close": "Close",
+	"english": "English",
+	"espanol": "Español",
+    "errors_login" : "Wrong email or password. Please try again."
+}

@@ -1,0 +1,12 @@
+{
+    "language": "Idioma",
+	"sign_up": "Registrarse",
+    "login": "Login",
+	"email": "Correo electrónico",
+	"password": "Contraseña",
+	"password_conf": "Confirmación de contraseña",
+	"close": "Cerrar",
+	"english": "English",
+	"espanol": "Español",
+	"errors_login" : "Correo electrónico o contraseña invalido."
+}
