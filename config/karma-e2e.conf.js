@@ -12,8 +12,11 @@ browsers = ['Chrome'];
 
 singleRun = false;
 
+// web server port
+port = 8000;
+
 proxies = {
-  '/': 'http://localhost:8080/'
+  '/': 'http://localhost:8000/'
 };
 
 urlRoot = '/_karma_/';

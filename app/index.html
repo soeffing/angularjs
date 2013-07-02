@@ -11,8 +11,10 @@
   <link rel="stylesheet" href="css/app.css"/>
   <!-- endbuild -->
 </head>
-<body>
+<body ng-controller="RootCtrl">
   <div ng-include="'tpls/nav.tpl.html'" class="navbar" ng-controller="NavCtrl"> <navibar></navibar> </div>
+  <!-- Alert Bar -->
+  <div alert-bar alertmessage="errorService.errorMessage"></div>
 
   <div ng-view></div>
 

@@ -30,7 +30,7 @@ resources.factory('User', ['$resource', 'TokenHandler', 'API_URL_RESOURCE', func
       update: {method: 'PUT'}
     });
 
-    resource = tokenHandler.wrapActions( resource, ["get", "query"] );
+    // resource = tokenHandler.wrapActions( resource, ["get", "query"] );
 
     return resource;
   }]);

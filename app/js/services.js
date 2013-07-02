@@ -1,6 +1,9 @@
 'use strict';
 
 angular.module('myApp.services', [])
+  .config(function ($httpProvider) {
+     $httpProvider.responseInterceptors.push('errorHttpInterceptor');
+  })
   .factory('TokenHandler', function() {
     var tokenHandler = {};
     var authData = {};
@@ -45,7 +48,7 @@ angular.module('myApp.services', [])
 
     return tokenHandler;
   })
-  .factory('security', ['$http', '$q', '$location', 'TokenHandler', 'API_URL', function($http, $q, $location, tokenHandler, API_URL) {
+  .factory('security', ['$http', '$q', '$location', 'TokenHandler', 'API_URL', '$rootScope', function($http, $q, $location, tokenHandler, API_URL, $rootScope) {
     // The public API of the service
     var service = {
 
@@ -61,12 +64,13 @@ angular.module('myApp.services', [])
           success(function(data, status, headers, config) {
         	 // this callback will be called asynchronously
         	 // when the response is available
+        	 $rootScope.invalidEmailPassword = null;
+
         	 tokenHandler.set( data );
         	 service.currentUser = data;
              if ( service.isAuthenticated() ) {
-               $('#loginModal').modal('hide');             }
-
-        	 console.log(data);
+               $('#loginModal').modal('hide');
+             }
           }).
           error(function(data, status, headers, config) {
         	 // called asynchronously if an error occurs
@@ -108,7 +112,6 @@ angular.module('myApp.services', [])
 
       // Is the current user authenticated?
       isAuthenticated: function(){
-      	console.log(!!service.currentUser);
         return !!service.currentUser;
       },
 
@@ -119,4 +122,36 @@ angular.module('myApp.services', [])
     };
 
     return service;
-}]);
+  }])
+  .factory('errorHttpInterceptor', function ($q, $location, $rootScope, errorService) {
+    return function (promise) {
+      return promise.then(function (response) {
+        errorService.clear();
+        return response;
+       }, function (response) {
+       	console.log(response);
+         if (response.status === 401) {
+           console.log('401 status');
+           errorService.setError('Wrong email or password! Please try again.');
+           $rootScope.$broadcast('event:loginRequired', response.data);
+         } else if (response.status >= 400 && response.status < 500) {
+           errorService.setError('Server was unable to find what you were looking for... Sorry!!');
+         } else if (response.status === 0) {
+           errorService.setError('You have to be logged in to see this page.');
+         }
+         return $q.reject(response);
+       });
+     };
+   })
+  .factory('errorService', function() {
+    return {
+      errorMessage: null,
+      setError: function(msg) {
+         this.errorMessage = msg;
+      },
+      clear: function() {
+        this.errorMessage = null;
+      }
+    };
+   });
+

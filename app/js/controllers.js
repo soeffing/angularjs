@@ -4,6 +4,9 @@ angular.module('myApp.controllers', [])
   .controller('MyCtrl1', [function() {
 
   }])
+  .controller('RootCtrl', ['$scope', 'errorService', function($scope, errorService) {
+    $scope.errorService = errorService;
+  }])
   .controller('NavCtrl', ['$scope', 'security', function($scope, security) {
     $scope.logout = function() {
       $scope.$emit('event:logout', $scope.user);
@@ -24,7 +27,8 @@ angular.module('myApp.controllers', [])
      };
   }])
   .controller('myAccountCtrl', ['$scope', '$http', 'API_URL', 'User', function($scope, $http, API_URL, User) {
-  	$scope.users = User.get({id: 2});
+  	//$scope.users = User.get({id: 2});
+  	 $scope.users = $http.get(API_URL + 'users/1?auth_token=sjsjskskskks');
   }]);
 
 

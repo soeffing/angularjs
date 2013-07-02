@@ -23,6 +23,16 @@ angular.module('myApp')
   }])
   .run(['$rootScope', '$http', 'TokenHandler', 'security',
   function( scope, $http, tokenHandler, security ) {
+  	scope.$on( 'event:loginRequired',  function(event, data) {
+      // later implement shit that opens up the login modal
+      if (data.errors[0] == 'Invalid email or password.') {
+        scope.invalidEmailPassword = "Invalid email or password. Please try again.";
+        scope.errorMessage = true;
+        // console.log('Login Model Error Message');
+      } else {
+        console.log('Login Required');
+      }
+    });
     scope.$on( 'event:authenticate',  function(event, user) {
       security.login(event, user.email, user.password);
     });
@@ -30,12 +40,12 @@ angular.module('myApp')
       var token = tokenHandler.get().token;
       security.logout(event, token);
     });
-     scope.isAuthenticated = security.isAuthenticated;
-     scope.$watch(function() {
-       return security.currentUser;
-     }, function(currentUser) {
-       scope.currentUser = currentUser;
-     });
+    scope.isAuthenticated = security.isAuthenticated;
+    scope.$watch(function() {
+      return security.currentUser;
+    }, function(currentUser) {
+      scope.currentUser = currentUser;
+    });
 }]);
 
 

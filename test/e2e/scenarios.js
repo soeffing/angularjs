@@ -13,6 +13,15 @@ describe('Bettle.me', function() {
     expect(element('.nav').css('display')).toBe('none');
   });
 
+  it('should show error if user provides invalid login data', function(){
+    element('a[href=#loginModal]').click();
+    input('user.email').enter('ulrich_soeffing@gmx.de');
+    input('user.password').enter('mysecre');
+    element('.btn-primary:contains("Login")').click();
+    expect(element('.alert').text()).toMatch(/Invalid email/);
+  });
+  // Invalid email or password. Please try again.
+
   it('should show navbar and logout button after user logged in', function() {
     //expect(element.('.nav').attr('display').toBe('none');
     element('a[href=#loginModal]').click();
