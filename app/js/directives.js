@@ -15,7 +15,7 @@ angular.module('myApp.directives', [])
         'x</button>' +
         '{{errorMessage}}</div>',
       link: function(scope, elem, attrs) {
-        var alertMessageAttr = attrs['alertmessage'];
+        var alertMessageAttr = attrs.alertmessage;
         scope.errorMessage = null;
         scope.$watch(alertMessageAttr, function(newVal) {
           scope.errorMessage = newVal;
@@ -39,7 +39,7 @@ angular.module('myApp.directives', [])
         'x</button>' +
         '{{notificationMessage}}</div>',
       link: function(scope, elem, attrs) {
-        var notificationMessageAttr = attrs['alertmessage'];
+        var notificationMessageAttr = attrs.alertmessage;
         scope.notificationMessage = null;
         scope.$watch(notificationMessageAttr, function(newVal) {
           scope.notificationMessage = newVal;
@@ -57,9 +57,8 @@ angular.module('myApp.directives', [])
   .directive('ngUserlookup', function() {
     return {
       link: function(scope, elem, attrs, ctrl) {
-        restrict: 'A',
         elem.bind('blur', function() {
-          if (elem.context.validity.valid == true) {// scope.$apply(attrs.ngBlur);
+          if (elem.context.validity.valid === true) {// scope.$apply(attrs.ngBlur);
             scope.$apply(scope.$parent.userLookUp(elem.context.value));
           }
         });
@@ -71,12 +70,12 @@ angular.module('myApp.directives', [])
           require: 'ngModel',
           link: function (scope, elm, attrs, ctrl) {
               ctrl.$parsers.unshift(function (viewValue, $scope) {
-                  var noMatch = viewValue != scope.form.password.$viewValue;
+                  var noMatch = viewValue !== scope.form.password.$viewValue;
                   console.log(noMatch);
                   ctrl.$setValidity('noMatch', !noMatch);
-              })
+              });
           }
-      }
+      };
   });
 
   // .directive('navibar', ['security', function(security) {

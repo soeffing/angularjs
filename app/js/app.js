@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('myApp', [
-	'myApp.filters',
-	'myApp.services',
-	'myApp.directives',
-	'myApp.controllers',
-	'myApp.resources',
+  'myApp.filters',
+  'myApp.services',
+  'myApp.directives',
+  'myApp.controllers',
+  'myApp.resources',
   'ngI18n']);
 
 
@@ -28,13 +28,12 @@ angular.module('myApp')
       .when('/myaccount', {templateUrl: 'partials/myaccount.html', controller: 'AccountCtrl'})
       .otherwise({redirectTo: '/view1'});
   }])
-  .run(['$rootScope', '$http', 'TokenHandler', 'security', 'ngI18nResourceBundle', function( scope, $http, tokenHandler, security, ngI18nResourceBundle ) {
-  	scope.$on( 'event:loginRequired',  function(event, data) {
-      // later implement shit that opens up the login modal
-      if (data.errors[0] == 'Invalid email or password.') {
-        scope.errorMessage = true;
-      } else {
-        console.log('Login Required');
+  .run(['$rootScope', '$http', 'TokenHandler', 'security', 'ngI18nResourceBundle', 'changeLocationSafely', 'errorService',
+    function( scope, $http, tokenHandler, security, ngI18nResourceBundle, changeLocationSafely, errorService ) {
+    scope.$on( 'event:loginRequired',  function(event, data) {
+      changeLocationSafely.newLocation('/login');
+      if (data === 'loginPlease') {
+        errorService.setError(scope.lang.notification_needToLogin);
       }
     });
     scope.$on( 'event:authenticate',  function(event, user) {
@@ -51,21 +50,19 @@ angular.module('myApp')
       scope.currentUser = currentUser;
     });
 
-
     // init locale service
     // https://github.com/gertn/ng-i18n
     scope.languages = [
-        {locale:"en"},
-        {locale:"es"}
+        {locale:'en'},
+        {locale:'es'}
     ];
 
     scope.i18n = {language: scope.languages[0]};
 
-    //scope.$watch('i18n.language', function (language) {
-        ngI18nResourceBundle.get({locale: scope.i18n.language.locale}).success(function (resourceBundle) {
-            scope.lang = resourceBundle;
-        });
-   // });
+    ngI18nResourceBundle.get({locale: scope.i18n.language.locale}).success(function (resourceBundle) {
+      scope.lang = resourceBundle;
+    });
+
 }]);
 
 

@@ -14,6 +14,7 @@
 	"sign_up_here": "¡Regístrate aquí!",
 	"my_account": "Mi cuenta",
     "notification_loggedIn": "Inicio de sesión.",
+    "notification_needToLogin": "Debes iniciar una sesión.",
 	"errors_login" : "Correo electrónico o contraseña invalido.",
 	"errors_tell_us_email": "Indica tu dirección electrónico.",
 	"errors_email_not_valid": "La dirección electrónico es invalido.",

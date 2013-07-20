@@ -9,10 +9,10 @@ resources.factory('UserRegistration', ['$http', 'API_URL', function($http, API_U
   };
   UserRegistration.prototype.$save = function() {
     return $http.post(API_URL + 'users', {
-      "user" : {
-        "email" : this.email,
-        "password" : this.password,
-        "password_confirmation" : this.password_confirmation
+      'user' : {
+        'email' : this.email,
+        'password' : this.password,
+        'password_confirmation' : this.password_confirmation
       }
     });
   };
@@ -26,6 +26,6 @@ resources.factory('User', ['$resource', 'TokenHandler', 'API_URL_RESOURCE', func
   }, {
     update: {method: 'PUT'}
   });
-  // resource = tokenHandler.wrapActions( resource, ["get", "query"] );
+  resource = tokenHandler.wrapActions( resource, ['get', 'query'] );
   return resource;
 }]);

@@ -14,6 +14,7 @@
     "sign_up_here": "Sign up here!",
 	"my_account": "My Account",
 	"notification_loggedIn": "Logged in succesfully.",
+    "notification_needToLogin": "You need to sign in before seeing the requested page.",
     "errors_login" : "Wrong email or password. Please try again.",
     "errors_tell_us_email": "Tell us your email address.",
     "errors_email_not_valid": "This is not a valid email.",
