@@ -62,21 +62,19 @@ angular.module('myApp.services', [])
 
         var request = $http.post(API_URL + 'users/sign_in', payload).
           success(function(data, status, headers, config) {
-        	 // this callback will be called asynchronously
-        	 // when the response is available
-        	 $rootScope.invalidEmailPassword = null;
 
-        	 tokenHandler.set( data );
-        	 service.currentUser = data;
-             if ( service.isAuthenticated() ) {
-               $('#loginModal').modal('hide');
-             }
-          }).
-          error(function(data, status, headers, config) {
-        	 // called asynchronously if an error occurs
-        	 // or server returns response with an error status.
-        	 console.log(data,status, headers, config);
-          });
+        	  $rootScope.invalidEmailPassword = null;
+        	  tokenHandler.set( data );
+        	  service.currentUser = data;
+              if ( service.isAuthenticated() ) {
+                $('#loginModal').modal('hide');
+              }
+           }).
+           error(function(data, status, headers, config) {
+        	   // called asynchronously if an error occurs
+        	   // or server returns response with an error status.
+        	   console.log(data,status, headers, config);
+           });
       },
 
       // Give up trying to login and clear the retry queue
@@ -123,10 +121,15 @@ angular.module('myApp.services', [])
 
     return service;
   }])
-  .factory('errorHttpInterceptor', function ($q, $location, $rootScope, errorService) {
+  .factory('errorHttpInterceptor', function ($q, $location, $rootScope, errorService, notificationService) {
     return function (promise) {
       return promise.then(function (response) {
         errorService.clear();
+        notificationService.clear();
+        //console.log(response.status);
+        if (response.status === 201) {
+          notificationService.setNotification($rootScope.lang.notification_loggedIn);
+        }
         return response;
        }, function (response) {
 
@@ -151,6 +154,17 @@ angular.module('myApp.services', [])
       },
       clear: function() {
         this.errorMessage = null;
+      }
+    };
+   })
+  .factory('notificationService', function() {
+    return {
+      notificationMessage: null,
+      setNotification: function(msg) {
+         this.notificationMessage = msg;
+      },
+      clear: function() {
+        this.notificationMessage = null;
       }
     };
    });

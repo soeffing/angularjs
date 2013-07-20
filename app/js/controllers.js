@@ -4,9 +4,10 @@ angular.module('myApp.controllers', [])
   .controller('MyCtrl1', [function() {
 
   }])
-  .controller('RootCtrl', ['$scope', 'errorService', function($scope, errorService) {
-    // reference to errorService
+  .controller('RootCtrl', ['$scope', 'errorService', 'notificationService', function($scope, errorService, notificationService) {
+    // reference to errorService & notification service
     $scope.errorService = errorService;
+    $scope.notificationService = notificationService;
   }])
   .controller('NavCtrl', ['$scope', 'security', '$rootScope', 'ngI18nResourceBundle', function($scope, security, $rootScope, ngI18nResourceBundle) {
     $scope.logout = function() {
@@ -21,19 +22,39 @@ angular.module('myApp.controllers', [])
   }])
   .controller('LoginCtrl', ['$scope', '$http', 'API_URL', function($scope, $http, API_URL) {
   	$scope.user = {};
-  	//$scope.user.email = "ulrich_soeffing@gmx.de";
-  	// $scope.user.password = "mysecret";
+  	$scope.user.email = "ulrich_soeffing@gmx.de";
+  	$scope.user.password = "mysecret";
   	$scope.login = function() {
   	  $scope.$emit('event:authenticate', $scope.user);
   	}
   }])
-  .controller('RegistrationCtrl', ['$scope', 'UserRegistration', function($scope, UserRegistration) {
-     $scope.user = new UserRegistration;
+  .controller('RegistrationCtrl', ['$scope', '$http', 'UserRegistration', 'API_URL', function($scope, $http, UserRegistration, API_URL) {
+     //$scope.userExists = null;
+     $scope.user = new UserRegistration();
      $scope.signup = function() {
        $scope.user.$save();
      };
+     $scope.userLookUp = function(email) {
+       $http.get(API_URL + 'userslookup?email=' + email).
+         success(function(data, status, headers, config) {
+           // console.log($scope.user.email.$setValidity('emailExists', false));
+           if (data.message === "true") {
+             console.log($scope);
+             $scope.userExists = true;
+             $scope.$$childTail.form.email.$setValidity('userExists', false);
+            } else {
+             $scope.userExists = null;
+             $scope.$$childTail.form.email.$setValidity('userExists', true);
+            }
+         }).
+         error(function(data, status, headers, config) {
+         // called asynchronously if an error occurs
+         // or server returns response with an error status.
+         console.log(data, status, headers, config);
+         });
+    };
   }])
-  .controller('myAccountCtrl', ['$scope', '$http', 'API_URL', 'User', function($scope, $http, API_URL, User) {
+  .controller('AccountCtrl', ['$scope', '$http', 'API_URL', 'User', function($scope, $http, API_URL, User) {
   	//$scope.users = User.get({id: 2});
   	 $scope.users = $http.get(API_URL + 'users/1?auth_token=sjsjskskskks');
   }]);

@@ -29,7 +29,55 @@ angular.module('myApp.directives', [])
         };
       }
     };
-  }]);
+  }])
+  .directive('notificationBar', ['$parse', function($parse) {
+    return {
+      restrict: 'A',
+      template: '<div class="alert alert-success alert-bar"' +
+        'ng-show="notificationMessage">' +
+        '<button type="button" class="close" ng-click="hideNotification()">' +
+        'x</button>' +
+        '{{notificationMessage}}</div>',
+      link: function(scope, elem, attrs) {
+        var notificationMessageAttr = attrs['alertmessage'];
+        scope.notificationMessage = null;
+        scope.$watch(notificationMessageAttr, function(newVal) {
+          scope.notificationMessage = newVal;
+         });
+        scope.hideNotification = function() {
+          scope.notificationMessage = null;
+          // Also clear the error message on the bound variable.
+          // Do this so that if the same error happens again
+          // the alert bar will be shown again next time.
+          $parse(notificationMessageAttr).assign(scope, null);
+        };
+      }
+    };
+  }])
+  .directive('ngUserlookup', function() {
+    return {
+      link: function(scope, elem, attrs, ctrl) {
+        restrict: 'A',
+        elem.bind('blur', function() {
+          if (elem.context.validity.valid == true) {// scope.$apply(attrs.ngBlur);
+            scope.$apply(scope.$parent.userLookUp(elem.context.value));
+          }
+        });
+      }
+    };
+  })
+  .directive('validPasswordC', function () {
+      return {
+          require: 'ngModel',
+          link: function (scope, elm, attrs, ctrl) {
+              ctrl.$parsers.unshift(function (viewValue, $scope) {
+                  var noMatch = viewValue != scope.form.password.$viewValue;
+                  console.log(noMatch);
+                  ctrl.$setValidity('noMatch', !noMatch);
+              })
+          }
+      }
+  });
 
   // .directive('navibar', ['security', function(security) {
     // var directive = {

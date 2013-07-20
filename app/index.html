@@ -14,15 +14,12 @@
 <body ng-controller="RootCtrl">
   <div ng-include="'tpls/nav.tpl.html'" class="navbar" ng-controller="NavCtrl"> <navibar></navibar> </div>
   <!-- Alert Bar -->
+  <div notification-bar alertmessage="notificationService.notificationMessage"></div>
   <div alert-bar alertmessage="errorService.errorMessage"></div>
 
-  <div ng-view></div>
-
-  <!-- Login Modal -->
-  <div ng-include="'tpls/login.tpl.html'" ng-controller="LoginCtrl" id="loginModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true"></div>
-
-  <!-- Sign Up Modal -->
-  <div ng-include="'tpls/signup.tpl.html'" ng-controller="RegistrationCtrl" id="signupModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true"></div>
+  <div class="container-fluid">
+    <div ng-view></div>
+  </div>
 
   <!-- build:js scripts/scripts.js -->
   <script src="js/vendor/angular/angular.js"></script>

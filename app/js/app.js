@@ -23,17 +23,16 @@ angular.module('myApp').value('ngI18nConfig', {
 angular.module('myApp')
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
-      .when('/myaccount', {templateUrl: 'partials/myaccount.html', controller: 'MyCtrl1'})
-      .when('/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'})
+      .when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'})
+      .when('/signup', {templateUrl: 'partials/signup.html', controller: 'RegistrationCtrl'})
+      .when('/myaccount', {templateUrl: 'partials/myaccount.html', controller: 'AccountCtrl'})
       .otherwise({redirectTo: '/view1'});
   }])
   .run(['$rootScope', '$http', 'TokenHandler', 'security', 'ngI18nResourceBundle', function( scope, $http, tokenHandler, security, ngI18nResourceBundle ) {
   	scope.$on( 'event:loginRequired',  function(event, data) {
       // later implement shit that opens up the login modal
       if (data.errors[0] == 'Invalid email or password.') {
-        scope.invalidEmailPassword = scope.lang.errors_login;
         scope.errorMessage = true;
-        // console.log('Login Model Error Message');
       } else {
         console.log('Login Required');
       }

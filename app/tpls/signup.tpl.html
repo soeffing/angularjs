@@ -3,23 +3,37 @@
   <h3 id="signupModalLabel">{{lang.sign_up}}</h3>
 </div>
 <div class="modal-body">
-  <form class="form-horizontal">
+  <form name="form" novalidate class="form-horizontal css-form">
     <div class="control-group">
       <label class="control-label" for="email">{{lang.email}}</label>
       <div class="controls">
-        <input ng-model="user.email" type="text" id="email" name="email" placeholder="{{lang.email}}" class="input-xlarge">
+        <input ng-model="user.email" type="email" id="email" name="email" placeholder="{{ lang.email }}" class="input-xlarge" required ng-userlookup />
+        <div ng-show="form.email.$dirty && form.email.$invalid">
+          <span ng-show="form.email.$error.required"> {{ lang.errors_tell_us_email }} </span>
+          <span ng-show="form.email.$error.email">{{ lang.errors_email_not_valid }}</span>
+           <span ng-show="userExists"> {{ lang.errors_email_taken }}</span>
+        </div>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="password">{{lang.password}}</label>
       <div class="controls">
-        <input ng-model="user.password" type="password" id="password" name="password" placeholder="{{lang.password}}" class="input-xlarge">
+        <input ng-model="user.password" type="password" id="password" name="password" placeholder="{{lang.password}}" class="input-xlarge" ng-minlength="8"  ng-maxlength="20" ng-pattern="/(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z])/" required />
+        <div ng-show="form.password.$dirty && form.password.$invalid">
+          <span ng-show="form.password.$error.minlength || form.password.$error.maxlength"> {{ lang.errors_passw_length }} </span>
+          <span ng-show="form.password.$error.pattern">{{ lang.errors_passw_pattern }} </span>
+          <span ng-show="form.password.$error.required"> {{ lang.errors_required }}</span>
+        </div>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="password">{{lang.password_conf}}</label>
       <div class="controls">
-        <input ng-model="user.password_confirmation" type="password" id="password_confirmation" name="password_confirmation" placeholder="{{lang.password_conf}}" class="input-xlarge">
+        <input ng-model="user.password_confirmation" type="password" id="password_confirmation" name="password_confirmation" placeholder="{{lang.password_conf}}" class="input-xlarge" valid-password-c required />
+        <div ng-show="form.password_confirmation.$dirty && form.password_confirmation.$invalid">
+          <span ng-show="form.password_confirmation.$error.required">{{ lang.errors_required }}</span>
+          <span ng-show="form.password_confirmation.$error.noMatch">{{ lang.errors_passw_no_match }}</span>
+        </div>
       </div>
     </div>
   </form>

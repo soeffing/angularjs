@@ -7,7 +7,7 @@
 /* -----------------------------------------
    Menu
 ----------------------------------------- */
-
+  /*
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -35,4 +35,24 @@
 .menu > li:nth-child(1):before {
   content: "";
   padding: 0;
+}
+*/
+
+/* Client side validation */
+
+
+.css-form input.ng-invalid.ng-dirty {
+  border-color: rgba(250, 23, 15, 1.0);
+}
+
+.css-form input.ng-valid.ng-dirty {
+  border-color:  rgba(22, 220, 4, 1.0);
+}
+
+.dropdown-menu li {
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  background-color: #58D3F7;
 }

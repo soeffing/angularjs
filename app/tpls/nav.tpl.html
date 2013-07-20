@@ -7,39 +7,34 @@
       <span class="icon-bar"></span>
     </a>
     <!-- Be sure to leave the brand out there if you want it shown -->
-    <a class="brand" href="#">Bettle.me</a>
+    <a class="brand" href="#">myApp.com</a>
     <!-- Everything you want hidden at 940px or less, place within here -->
     <div class="nav-collapse collapse navbar-responsive-collapse">
       <!-- .nav, .navbar-search, .navbar-form, etc -->
       <ul class="nav" ng-show="isAuthenticated()">
-        <li><a href="">My Bets</a></li>
-        <li><a href="#/myaccount">My Account</a></li>
-        <li><a href="#">Payments & Deposits</a></li>
+        <li><a href="#/myaccount">{{lang.my_account}}</a></li>
       </ul>
       <ul class="nav pull-right">
         <li>
-        <div class="btn-group">
-          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-            {{lang.language}}
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-           <li ng-click="setLocale('en')"> <img src="img/um.png"> English</li>
-           <li ng-click="setLocale('es')"><img src="img/es.png"> Spanish</li>
-          </ul>
-        </div>
+          <div class="btn-group">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              {{lang.language}}
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+             <li ng-click="setLocale('en')"> <img src="img/um.png"> {{lang.english}}</li>
+             <li ng-click="setLocale('es')"><img src="img/es.png"> {{lang.espanol}}</li>
+            </ul>
+          </div>
         </li>
         <li ng-hide="isAuthenticated()">
-          <a href="#loginModal" role="button" data-toggle="modal">Login</a>
+          <a href="#/login" role="button">{{lang.login}}</a>
         </li>
         <li ng-hide="isAuthenticated()">
-          <a href="#signupModal" role="button" data-toggle="modal">{{ lang.sign_up}}</a>
+          <a href="#/signup" role="button">{{ lang.sign_up}}</a>
         </li>
         <li ng-show="isAuthenticated()">
-          <a href="#" role="button">Hello User</a>
-        </li>
-        <li ng-show="isAuthenticated()">
-          <button ng-click="logout()" class="btn btn-primary">Logout</button>
+          <button ng-click="logout()" class="btn btn-primary">{{lang.logout}}</button>
         </li>
       </ul>
     </div>
