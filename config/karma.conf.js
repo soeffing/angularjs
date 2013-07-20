@@ -7,7 +7,12 @@ files = [
   'app/js/vendor/angular/angular-*.js',
   'test/lib/angular/angular-mocks.js',
   'app/js/**/*.js',
-  'test/unit/**/*.js'
+  'test/unit/**/*.js',
+
+  //Test-Specific Code
+ // 'node_modules/chai/chai.js',
+ // 'test/lib/chai-should.js',
+ // 'test/lib/chai-expect.js'
 ];
 
 autoWatch = true;

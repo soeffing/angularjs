@@ -1,5 +1,5 @@
 'use strict';
-
+var util = require('./test/lib/karma-util.js');
 var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
 var mountFolder = function(connect, dir) {
   return connect.static(require('path').resolve(dir));
@@ -8,6 +8,12 @@ var mountFolder = function(connect, dir) {
 module.exports = function(grunt) {
   // load all grunt tasks
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  grunt.loadNpmTasks('grunt-shell');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
   // configurable paths
   var myAppConfig = {
@@ -75,6 +81,11 @@ module.exports = function(grunt) {
         '<%= myApp.app %>/js/{,*/}*.js'
       ]
     },
+    midway: {
+    // unit: './config/karma.conf.js',
+     midway: './config/karma-midway.conf.js',
+    // e2e: './config/karma-e2e.conf.js'
+    },
     karma: {
       unit: {
         configFile: '<%= myApp.config %>/karma.conf.js',
@@ -82,6 +93,9 @@ module.exports = function(grunt) {
       },
       e2e: {
         configFile: '<%= myApp.config %>/karma-e2e.conf.js'
+      },
+      midway: {
+        configFile: '<%= myApp.config %>/karma-midway.conf.js'
       }
     },
     concat: {
@@ -211,6 +225,10 @@ module.exports = function(grunt) {
     'connect:app',
     'karma:e2e'
   ]);
+
+  grunt.registerMultiTask('midway', 'Run and watch the unit tests with Karma', function() {
+    util.startKarma.call(util, this.data, true, this.async());
+  });
 
   grunt.registerTask('build', [
     'clean:dist',

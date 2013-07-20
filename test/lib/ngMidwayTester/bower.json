@@ -1,0 +1,9 @@
+{
+  "name": "ngMidwayTester",
+  "version": "0.0.0",
+  "commit": "6f2e1a6189918ff26f68c2049daad4347e716b0d",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yearofmoo/ngMidwayTester.git"
+  }
+}

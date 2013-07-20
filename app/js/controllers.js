@@ -22,8 +22,8 @@ angular.module('myApp.controllers', [])
   }])
   .controller('LoginCtrl', ['$scope', '$http', 'API_URL', function($scope, $http, API_URL) {
     $scope.user = {};
-    $scope.user.email = 'ulrich_soeffing@gmx.de';
-    $scope.user.password = 'mysecret';
+    //$scope.user.email = 'ulrich_soeffing@gmx.de';
+    // $scope.user.password = 'mysecret';
     $scope.login = function() {
       $scope.$emit('event:authenticate', $scope.user);
     };
