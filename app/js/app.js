@@ -7,6 +7,7 @@ angular.module('myApp', [
   'myApp.controllers',
   'myApp.resources',
   'ngI18n',
+  'ui.select2',
   'ui.bootstrap']);
 
 

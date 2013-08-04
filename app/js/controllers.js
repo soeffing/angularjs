@@ -81,14 +81,14 @@ angular.module('myApp.controllers', [])
       $scope.dt = null;
     };
 
-      // Disable weekend selection
-      $scope.disabled = function(date, mode) {
-        return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-      };
+    // Disable weekend selection
+    // $scope.disabled = function(date, mode) {
+      // return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+    // };
 
-      $scope.toggleMin = function() {
-        $scope.minDate = ( $scope.minDate ) ? null : new Date();
-      };
+    $scope.toggleMin = function() {
+      $scope.minDate = ( $scope.minDate ) ? null : new Date();
+    };
 
     $scope.toggleMin();
 
@@ -104,10 +104,10 @@ angular.module('myApp.controllers', [])
        mstep: [1, 5, 10, 15, 25, 30]
     };
 
-     $scope.ismeridian = true;
-     $scope.toggleMode = function() {
-       $scope.ismeridian = ! $scope.ismeridian;
-     };
+    // $scope.ismeridian = true;
+    // $scope.toggleMode = function() {
+    //   $scope.ismeridian = ! $scope.ismeridian;
+    // };
 
      $scope.update = function() {
        var d = new Date();
@@ -163,10 +163,32 @@ angular.module('myApp.controllers', [])
       minLength: 1,
       source: search,
       select: select,
-      delay: 500,
+      delay: 100,
       _renderItem: _renderItem
     };
 
+    // dropdown options for outcoe
+    $scope.select2Options = {
+        minimumResultsForSearch: -10
+    };
+
+    // set inital state to cash
+    $scope.cashOrHonour = 'cash';
+
+    // does he play for cash or honour
+    $scope.forCash = function(value) {
+     return !!(value == 'cash');
+    };
+
+    // time selection modus
+    // set inital state to cash
+    $scope.timeSelection = 'specific';
+
+
+    // does he play for cash or honour
+    $scope.timeSelect = function(value) {
+     return !!(value == 'specific');
+    };
    }]);
 
 

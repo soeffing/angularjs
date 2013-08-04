@@ -88,11 +88,9 @@ angular.module('myApp.directives', [])
         };
         var initAutocompleteWidget = function () {
           var opts = getOptions();
-          console.log(opts);
           element.autocomplete(opts);
           if (opts._renderItem) {
             console.log(element);
-            //element._renderItem = opts._renderItem;
            element.data("ui-autocomplete")._renderItem = opts._renderItem;
           }
         };
@@ -100,7 +98,18 @@ angular.module('myApp.directives', [])
         scope.$watch(getOptions, initAutocompleteWidget, true);
       }
     };
-  });
+  })
+  .directive('currentTime', ['$timeout', function($timeout) {
+    return {
+      link: function(scope, element, attrs, controller) {
+        scope.onTimeout = function() {
+          scope.currentTime =  new Date().toUTCString();
+          $timeout(scope.onTimeout,1000);
+        }
+        var mytimeout = $timeout(scope.onTimeout , 1000);
+      }
+    }
+  }]);
 
   // .directive('navibar', ['security', function(security) {
     // var directive = {

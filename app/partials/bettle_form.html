@@ -1,41 +1,98 @@
+
 <div class="row-fluid">
-	<div class="row-fluid">
-		<div class="span12 text-center">
-			<h3 >New Bettle</h3>
+	<div class="span12 text-center">
+		<h3 >New Bettle</h3>
+	</div>
+</div>
+<form name="form" novalidate class="form-vertical css-form">
+	<div class="row-fluid text-center">
+		<div class="offset3 span6">
+			<input class="input-xxlarge" placeholder="Search for a game you want to bettle on" ng-model="term" ui-autocomplete="autocompleteOptions"/>
 		</div>
 	</div>
-	<form name="form" novalidate class="form-vertical css-form">
-		<div class="row-fluid">
-			<div class="offset5 span6">
-				<input placeholder="Search for a team here" ng-model="term" ui-autocomplete="autocompleteOptions"/>
-			</div>
+	<div class="row-fluid text-center">
+		<div class="offset3 span2"> {{ team_one }} </div>
+		<div class="span2">vs.</div>
+		<div class="span2"> {{ team_two }} </div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="offset3 span2"> {{ fixture_league }} </div>
+		<div class="span2"></div>
+		<div class="span2"> {{ fixture_date }} </div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="span12"><h5>Make your rules.</h5></div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="offset4 span2">
+			<button type="button" class="btn btn-primary" ng-model="cashOrHonour" btn-radio="'cash'" >Play for Cash</button>
 		</div>
-		<div class="row-fluid text-center">
-			<div class="offset3 span2"> {{ team_one }} </div>
-			<div class="span2">vs.</div>
-			<div class="span2"> {{ team_two }} </div>
+		<div class="span2">
+			<button type="button" class="btn btn-primary" ng-model="cashOrHonour" btn-radio="'honour'" > Play for Honour</button>
 		</div>
-		<div class="row-fluid text-center">
-			<div class="offset3 span2"> {{ fixture_league }} </div>
-			<div class="span2"></div>
-			<div class="span2"> {{ fixture_date }} </div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="offset2 span3">
+			I bet <input placeholder="5€" class="input-small" type="text" ng-show="forCash(cashOrHonour)"/> that
 		</div>
-		<div class="row-fluid text-center">
-			<div class="offset4 span2">
-				<button type="button" class="btn btn-primary" ng-model="radioModel" btn-radio="'cash'">I play for cash</button>
-			</div>
-			<div class="span2">
-				<button type="button" class="btn btn-primary" ng-model="radioModel" btn-radio="'honour'">I play for honour</button>
-			</div>
+		<div class="span3">
+			<select ui-select2="select2Options" ng-model="select_outcome_1" data-placeholder="pick an outcome" class="input-xlarge">
+				<option value=""></option>
+				<option value="one">{{team_one}} wins against {{team_two }}</option>
+				<option value="two">tie</option>
+				<option value="three">{{ team_two }} wins against {{ team_one }}</option>
+			</select>
 		</div>
-		<div class="row-fluid">
-			<div class="span6">
-				<datepicker ng-model="dt" show-weeks="showWeeks" starting-day="1" date-disabled="disabled(date, mode)" min="minDate" max="'2015-06-22'"></datepicker>
-			</div>
-			<div class="span6">
-				<timepicker ng-model="mytime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
-			</div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="offset2 span3">
+			Opponent bets <input placeholder="5€" class="input-small" type="text" ng-show="forCash(cashOrHonour)"/> that
+		</div>
+		<div class="span3">
+			<select ui-select2="select2Options" ng-model="select_outcome_2" data-placeholder="pick an outcome" class="input-xlarge">
+				<option value=""></option>
+				<option value="one">{{team_one}} wins against {{team_two }}</option>
+				<option value="two">tie</option>
+				<option value="three">{{ team_two }} wins against {{ team_one }}</option>
+			</select>
+		</div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="span12"><h5>When do you want your Bettle to expire?</h5></div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="span12"><p>Bettle.me orientates itself to the Greenwich Mean Time (GMT).</p></div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="span12" current-time><p> Current GMT: {{ currentTime }}</p></div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="offset4 span2">
+			<button type="button" class="btn btn-primary" ng-model="timeSelection" btn-radio="'specific'" > Date & Time</button>
+		</div>
+		<div class="span2">
+			<button type="button" class="btn btn-primary" ng-model="timeSelection" btn-radio="'span'" > Time Span</button>
+		</div>
+	</div>
+	<div class="row-fluid text-center" ng-show="timeSelect(timeSelection)">
+		<div class="offset2 span4">
+			<datepicker ng-model="dt" show-weeks="showWeeks" starting-day="1" date-disabled="disabled(date, mode)" min="minDate" max="'2015-06-22'"></datepicker>
+		</div>
+		<div class="span4">
+			<timepicker ng-model="mytime" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+		</div>
+	</div>
+	<div class="row-fluid text-center" ng-hide="timeSelect(timeSelection)">
+		<div class="span12">
+			<p>Bettle expires in:</p>
+			<input class="input-small" placeholder="# days" ng-model="day"/>
+			<input class="input-small" placeholder="# hours" ng-model="hours"/>
+			<input class="input-small" placeholder="# minutes" ng-model="minutes"/>
+		</div>
+	</div>
+	<div class="row-fluid text-center">
+		<div class="span12">
+			<button ng-click="createBettle()" class="btn btn-primary" > Lets Bettle!</button>
 		</div>
 	</div>
 </form>
-</div>
