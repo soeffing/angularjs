@@ -10,10 +10,10 @@ describe('Controllers', function(){
   	beforeEach(inject(function(_$httpBackend_, $rootScope, $controller, $location) {
   	  mockBackend = _$httpBackend_;
   	  location = $location;
-  	  $scope = $rootScope.$new();
+  	  scope = $rootScope.$new();
   	  // API_URL = 'http://localhost:3000/api/v1/'
   	  ctrl = $controller('LoginCtrl', {
-  	  	$scope: $scope,
+  	  	$scope: scope,
   	  	$location: $location
   	  });
   	}));

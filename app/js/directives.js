@@ -59,7 +59,7 @@ angular.module('myApp.directives', [])
       link: function(scope, elem, attrs, ctrl) {
         elem.bind('blur', function() {
           if (elem.context.validity.valid === true) {// scope.$apply(attrs.ngBlur);
-            scope.$apply(scope.$parent.userLookUp(elem.context.value));
+            scope.$apply(scope.userLookUp(elem.context.value));
           }
         });
       }
@@ -76,6 +76,30 @@ angular.module('myApp.directives', [])
               });
           }
       };
+  })
+  // http://chuvash.eu/2013/01/04/angular-jquery-ui-autocomplete/
+  // https://gist.github.com/mirontoli/5021701
+  .directive('uiAutocomplete', function () {
+    return {
+      require: '?ngModel',
+      link: function(scope, element, attrs, controller) {
+        var getOptions = function() {
+          return angular.extend({}, scope.$eval(attrs.uiAutocomplete));
+        };
+        var initAutocompleteWidget = function () {
+          var opts = getOptions();
+          console.log(opts);
+          element.autocomplete(opts);
+          if (opts._renderItem) {
+            console.log(element);
+            //element._renderItem = opts._renderItem;
+           element.data("ui-autocomplete")._renderItem = opts._renderItem;
+          }
+        };
+        // Watch for changes to the directives options
+        scope.$watch(getOptions, initAutocompleteWidget, true);
+      }
+    };
   });
 
   // .directive('navibar', ['security', function(security) {

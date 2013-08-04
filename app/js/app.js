@@ -6,7 +6,8 @@ angular.module('myApp', [
   'myApp.directives',
   'myApp.controllers',
   'myApp.resources',
-  'ngI18n']);
+  'ngI18n',
+  'ui.bootstrap']);
 
 
 
@@ -20,12 +21,21 @@ angular.module('myApp').value('ngI18nConfig', {
   supportedLocales: ['en', 'es']
 });
 
+// autocomplete config
+angular.module('myApp').value('ui.config', {
+  autocomplete: {
+    minLength: 2,
+    delay: 500
+  }
+});
+
 angular.module('myApp')
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
       .when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'})
       .when('/signup', {templateUrl: 'partials/signup.html', controller: 'RegistrationCtrl'})
       .when('/myaccount', {templateUrl: 'partials/myaccount.html', controller: 'AccountCtrl'})
+      .when('/bettle/new', {templateUrl: 'partials/bettle_form.html', controller: 'NewBettleCtrl'})
       .otherwise({redirectTo: '/view1'});
   }])
   .run(['$rootScope', '$http', 'TokenHandler', 'security', 'ngI18nResourceBundle', 'changeLocationSafely', 'errorService',
