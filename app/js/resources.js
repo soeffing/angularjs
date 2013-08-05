@@ -29,3 +29,13 @@ resources.factory('User', ['$resource', 'TokenHandler', 'API_URL_RESOURCE', func
   resource = tokenHandler.wrapActions( resource, ['get', 'query'] );
   return resource;
 }]);
+
+resources.factory('Bettle', ['$resource', 'TokenHandler', 'API_URL_RESOURCE', function($resource, tokenHandler, API_URL_RESOURCE) {
+  var resource = $resource(API_URL_RESOURCE + 'bettles/:id', {
+    id:'@id'
+  }, {
+    update: {method: 'PUT'}
+  });
+  resource = tokenHandler.wrapActions( resource, ['get', 'query'] );
+  return resource;
+}]);

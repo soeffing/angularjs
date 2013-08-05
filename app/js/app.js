@@ -37,7 +37,9 @@ angular.module('myApp')
       .when('/signup', {templateUrl: 'partials/signup.html', controller: 'RegistrationCtrl'})
       .when('/myaccount', {templateUrl: 'partials/myaccount.html', controller: 'AccountCtrl'})
       .when('/bettle/new', {templateUrl: 'partials/bettle_form.html', controller: 'NewBettleCtrl'})
-      .otherwise({redirectTo: '/view1'});
+      .when('/my_bettles', {templateUrl: 'partials/my_bettles.html', controller: 'MyBettlesCtrl'})
+      .when('/index', {templateUrl: 'partials/index.html', controller: 'IndexCtrl'})
+      .otherwise({redirectTo: '/index'});
   }])
   .run(['$rootScope', '$http', 'TokenHandler', 'security', 'ngI18nResourceBundle', 'changeLocationSafely', 'errorService',
     function( scope, $http, tokenHandler, security, ngI18nResourceBundle, changeLocationSafely, errorService ) {

@@ -90,7 +90,6 @@ angular.module('myApp.directives', [])
           var opts = getOptions();
           element.autocomplete(opts);
           if (opts._renderItem) {
-            console.log(element);
            element.data("ui-autocomplete")._renderItem = opts._renderItem;
           }
         };
@@ -109,7 +108,29 @@ angular.module('myApp.directives', [])
         var mytimeout = $timeout(scope.onTimeout , 1000);
       }
     }
+  }])
+  .directive('countDown', ['$timeout', function($timeout) {
+    return {
+      link: function(scope, element, attrs, controller) {
+        scope.onTimeout = function() {
+          // scope.currentTime =  new Date().toUTCString();
+          console.log(scope);
+          var now = new Date();
+
+          console.log(scope.bettle.expiration_datetime);
+          console.log( new Date().toUTCString());
+          if (scope.bettle.expiration_datetime >= new Date().toUTCString()) {
+            console.log('true');
+            scope.$parent.bettles.splice(scope.$index, 1);
+          }
+          $timeout(scope.onTimeout,1000);
+        }
+        var mytimeout = $timeout(scope.onTimeout , 1000);
+      }
+    }
   }]);
+
+
 
   // .directive('navibar', ['security', function(security) {
     // var directive = {

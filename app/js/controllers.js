@@ -60,7 +60,18 @@ angular.module('myApp.controllers', [])
     $scope.$emit('event:loginRequired', 'loginPlease');
   }
 }])
-.controller('NewBettleCtrl', ['$scope', 'security', '$http', 'API_URL', function($scope, security, $http, API_URL) {
+.controller('NewBettleCtrl', ['$scope', 'security', '$http', 'API_URL', 'Bettle', '$location', function($scope, security, $http, API_URL, Bettle, $location) {
+    //  seetng default values for debugging
+    $scope.newBettle = new Bettle();
+     $scope.newBettle.fixture_id = 15;
+    $scope.newBettle.max_opponents = 5;
+    $scope.newBettle.for_cash = 'true';
+    $scope.newBettle.maker_stake = 50;
+    $scope.newBettle.opponent_stake = 100;
+    $scope.newBettle.maker_outcome_id = 1;
+    $scope.newBettle.opponent_outcome_id = 3;
+    $scope.newBettle.expiration_datetime = new Date();
+
     //if ($scope.isAuthenticated()) {
       //$scope.user = User.get({id: $scope.currentUser.user_id || null});
     //}
@@ -100,25 +111,25 @@ angular.module('myApp.controllers', [])
     $scope.mstep = 15;
 
     $scope.options = {
-       hstep: [1, 2, 3],
-       mstep: [1, 5, 10, 15, 25, 30]
-    };
+     hstep: [1, 2, 3],
+     mstep: [1, 5, 10, 15, 25, 30]
+   };
 
     // $scope.ismeridian = true;
     // $scope.toggleMode = function() {
     //   $scope.ismeridian = ! $scope.ismeridian;
     // };
 
-     $scope.update = function() {
-       var d = new Date();
-       d.setHours( 14 );
-       d.setMinutes( 0 );
-       $scope.mytime = d;
-     };
+    $scope.update = function() {
+     var d = new Date();
+     d.setHours( 14 );
+     d.setMinutes( 0 );
+     $scope.mytime = d;
+   };
 
-     $scope.clear = function() {
-       $scope.mytime = null;
-     };
+   $scope.clear = function() {
+     $scope.mytime = null;
+   };
 
      // autocomplete section
      // http://chuvash.eu/2013/01/04/angular-jquery-ui-autocomplete/
@@ -136,7 +147,6 @@ angular.module('myApp.controllers', [])
     },
 
     fillOutFixtureDetails = function (data) {
-      console.log(data.team_one);
       $scope.$apply(function() {
         $scope.team_one = data.team_one;
         $scope.team_two = data.team_two;
@@ -154,7 +164,8 @@ angular.module('myApp.controllers', [])
 
     select = function (event, ui) {
       if (ui.item) {
-        console.log(ui.item);
+        // set the fixtur id in order to save the bettle
+        $scope.newBettle.fixture_id = ui.item.fixture_id;
         fillOutFixtureDetails(ui.item);
       }
     };
@@ -169,27 +180,71 @@ angular.module('myApp.controllers', [])
 
     // dropdown options for outcoe
     $scope.select2Options = {
-        minimumResultsForSearch: -10
+      minimumResultsForSearch: -10
     };
 
     // set inital state to cash
-    $scope.cashOrHonour = 'cash';
+    $scope.for_cash = 'true';
 
     // does he play for cash or honour
     $scope.forCash = function(value) {
-     return !!(value == 'cash');
-    };
+     return !!(value == 'true');
+   };
 
     // time selection modus
     // set inital state to cash
-    $scope.timeSelection = 'specific';
+    $scope.newBettle.timeSelection = 'specific';
 
 
     // does he play for cash or honour
     $scope.timeSelect = function(value) {
      return !!(value == 'specific');
+   };
+
+    //  #attr_accessible :maker_id, :taker_id, :fixture_id, :free_bet, :win_maker, :win_taker, :accepted, :expiration_time, :bettle_status_id, :taker_outcome_id, :maker_outcome_id
+
+    $scope.createBettle = function() {
+      console.log($scope.newBettle.fixture_id);
+      console.log($scope.newBettle.max_opponents);
+      console.log($scope.newBettle.for_cash);
+      console.log($scope.newBettle.maker_stake);
+      console.log($scope.newBettle.opponent_stake);
+      console.log($scope.newBettle.maker_outcome_id);
+      console.log($scope.newBettle.opponent_outcome_id);
+      if ($scope.newBettle.timeSelection == 'specific') {
+        console.log($scope.newBettle.expiration_datetime);
+      } else {
+        console.log($scope.newBettle.expiration_days);
+        console.log($scope.newBettle.expiration_hours);
+        console.log($scope.newBettle.expiration_minutes);
+
+      }
+      var bettle = Bettle.save($scope.newBettle);
+      $location.path('/my_bettles');
     };
-   }]);
+  }])
+  .controller('MyBettlesCtrl', ['$scope', '$http', 'API_URL', 'User', function($scope, $http, API_URL, User) {
+    // if ($scope.isAuthenticated()) {
+      // $scope.user = User.get({id: $scope.currentUser.user_id || null});
+    // }
+    // else {
+      // $scope.$emit('event:loginRequired', 'loginPlease');
+    // }
+  }])
+  .controller('IndexCtrl', ['$scope', 'Bettle', function($scope, Bettle) {
+    // if ($scope.isAuthenticated()) {
+      // $scope.user = User.get({id: $scope.currentUser.user_id || null});
+    // }
+    // else {
+      // $scope.$emit('event:loginRequired', 'loginPlease');
+    // }
+    $scope.bettles = Bettle.query();
+    console.log($scope.bettles);
+
+    $scope.setOrder = function (order) {
+        $scope.order = order;
+    };
+  }]);
 
 
 
