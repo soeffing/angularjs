@@ -138,7 +138,7 @@ angular.module('myApp.controllers', [])
 
      $scope.team_one = "";
 
-     var search = function(request, response) {
+    var search = function(request, response) {
       var callback = function(data) {
         response(data);
       };
@@ -167,8 +167,11 @@ angular.module('myApp.controllers', [])
         // set the fixtur id in order to save the bettle
         $scope.newBettle.fixture_id = ui.item.fixture_id;
         fillOutFixtureDetails(ui.item);
+         $scope.game_selected = 'true';
       }
     };
+
+     $scope.game_selected = 'false';
 
     $scope.autocompleteOptions = {
       minLength: 1,
@@ -178,9 +181,10 @@ angular.module('myApp.controllers', [])
       _renderItem: _renderItem
     };
 
-    // dropdown options for outcoe
+    // dropdown options for outcome
     $scope.select2Options = {
-      minimumResultsForSearch: -10
+      minimumResultsForSearch: -10,
+      placeholder: 'Pick an outcome'
     };
 
     // set inital state to cash
