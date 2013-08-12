@@ -7,26 +7,42 @@
       </a>
       <ul class="dropdown-menu">
         <li>
-          <a href="#" ng-click="setOrder('expiration_time'); reverse=false">Expiration time</a>
+          <a href="" ng-click="setOrder('-seconds_to_expiration');">Expiration time</a>
         </li>
         <li>
-          <a href="#" ng-click="setOrder('win_taker'); reverse=true"> Potential Win</a>
+          <a href="" ng-click="setOrder('-win_lose_ratio');">Win/Lose Ratio</a>
         </li>
       </ul>
+    </div>
   </div>
-</div>
-<div class="span4">
-  <input type="text" ng-model="searchText" placeholder="Search for a Team">
-</div>
+  <div class="span2">
+    <input type="text" ng-model="searchText" placeholder="Search for a Team">
+  </div>
+  <div class="span1">
+    Found: {{ (bettles|filter:searchText).length }}
+  </div>
 </div>
 <div class="row-fluid">
-  <div class="offset3 span6" ng-repeat="bettle in bettles | filter:searchText | orderBy:order:reverse ">
-    <div>Date: {{bettle.game_date}}</div>
-    <div>League: {{bettle.league}}</div>
-    <div>{{bettle.team_one}}</div>
-    <div>vs.</div>
-    <div>{{bettle.team_two}}</div>
-    <div> {{ bettle.expiration_datetime  }}</div>
-    <div count-down> Countdown: {{bettle | countdown_init }} </div>
+  <div class="offset4 span4" ng-repeat="bettle in bettles | filter:searchText | orderBy:order:reverse ">
+    <div class="span12 text-center">
+      {{ bettle.league}} {{ bettle.game_date }}
+    </div>
+    <div class="span12 text-center">
+      <span class="span4">{{bettle.team_one}}</span>
+      <span class="span4">vs.</span>
+      <span class="span4">{{bettle.team_two}}</span>
+    </div>
+
+    <div class="span12 text-center" style="position:relative">
+     <div ng-class="'outcome_presentation_' + bettle.maker_outcome_id" class="bettle_quick_visual alert alert-error alert-bar"> {{ bettle.maker_stake }} Euro </div>
+     <div ng-class="'outcome_presentation_' +  [1,2,3].diff([ bettle.maker_outcome_id , bettle.opponent_outcome_id ]).toString()" class="bettle_quick_visual ">  <button ng-click="createBettle()" class="btn btn-primary" > Bettle!</button> </div>
+     <div ng-class="'outcome_presentation_' + bettle.opponent_outcome_id" class="bettle_quick_visual alert alert-success alert-bar"> {{ bettle.opponent_stake }} Euro </div>
+   </div>
+    <div class="span12 text-center">
+      Win {{bettle.maker_stake}}€ if {{ bettle | outcome_opponent_sentence }} Lose {{ bettle.opponent_stake}}€ if {{ bettle | outcome_maker_sentence }}
+    </div>
+   <div class="span12 text-center" count-down>
+    Expires in: {{bettle | countdown_init }}
   </div>
+</div>
 </div>

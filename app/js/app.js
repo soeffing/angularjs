@@ -38,7 +38,7 @@ angular.module('myApp')
       .when('/myaccount', {templateUrl: 'partials/myaccount.html', controller: 'AccountCtrl'})
       .when('/bettle/new', {templateUrl: 'partials/bettle_form.html', controller: 'NewBettleCtrl'})
       .when('/my_bettles', {templateUrl: 'partials/my_bettles.html', controller: 'MyBettlesCtrl'})
-      .when('/index', {templateUrl: 'partials/index.html', controller: 'IndexCtrl'})
+      .when('/index', {templateUrl: 'partials/index.html', controller: 'BettleStreamCtrl'})
       .otherwise({redirectTo: '/index'});
   }])
   .run(['$rootScope', '$http', 'TokenHandler', 'security', 'ngI18nResourceBundle', 'changeLocationSafely', 'errorService',

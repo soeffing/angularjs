@@ -235,18 +235,25 @@ angular.module('myApp.controllers', [])
       // $scope.$emit('event:loginRequired', 'loginPlease');
     // }
   }])
-  .controller('IndexCtrl', ['$scope', 'Bettle', function($scope, Bettle) {
+  .controller('BettleStreamCtrl', ['$scope', 'Bettle', function($scope, Bettle) {
     // if ($scope.isAuthenticated()) {
       // $scope.user = User.get({id: $scope.currentUser.user_id || null});
     // }
     // else {
       // $scope.$emit('event:loginRequired', 'loginPlease');
     // }
+
     $scope.bettles = Bettle.query();
+    $scope.order = '+seconds_to_expiration';
     console.log($scope.bettles);
 
     $scope.setOrder = function (order) {
         $scope.order = order;
+         console.log($scope.order)
+    };
+
+    Array.prototype.diff = function(a) {
+      return this.filter(function(i) {return !(a.indexOf(i) > -1);});
     };
   }]);
 

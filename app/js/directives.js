@@ -113,24 +113,28 @@ angular.module('myApp.directives', [])
     return {
       link: function(scope, element, attrs, controller) {
         scope.onTimeout = function() {
-          // scope.currentTime =  new Date().toUTCString();
-          console.log(scope);
-          var now = new Date();
-
-          console.log(scope.bettle.expiration_datetime);
-          console.log( new Date().toUTCString());
-          if (scope.bettle.expiration_datetime >= new Date().toUTCString()) {
-            console.log('true');
+          scope.bettle.seconds_to_expiration--;
+          if (scope.bettle.seconds_to_expiration <= 0 ) {
             scope.$parent.bettles.splice(scope.$index, 1);
           }
           $timeout(scope.onTimeout,1000);
         }
-        var mytimeout = $timeout(scope.onTimeout , 1000);
+        $timeout(scope.onTimeout , 1000);
       }
     }
   }]);
-
-
+  //.directive('bettleInfoVisual', function() {
+    //return {
+        //restrict: 'A',
+        //template: '<div class="alert alert-error alert-bar"' +
+          //'> {{ scope.opponent_outcome_id }} - scope.maker_stake }}' +
+          //'</div> <div class="alert alert-success alert-bar>"' +
+          //'{{ scope.opponent_outcome_id }} - scope.maker_stake }} ' +
+          //'</div>',
+        //link: function(scope, elem, attrs) {
+        //}
+    //}
+  //});
 
   // .directive('navibar', ['security', function(security) {
     // var directive = {

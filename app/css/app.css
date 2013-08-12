@@ -56,3 +56,22 @@
 .dropdown-menu li:hover {
   background-color: #58D3F7;
 }
+
+
+.bettle_quick_visual {
+  position: absolute;
+  width: 120px;
+  padding: 0px;
+}
+
+.outcome_presentation_1 {
+  left: 0px;
+}
+
+.outcome_presentation_2 {
+  left: 137px;
+}
+
+.outcome_presentation_3 {
+  left: 274px;
+}
