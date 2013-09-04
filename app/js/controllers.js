@@ -252,9 +252,14 @@ angular.module('myApp.controllers', [])
          console.log($scope.order)
     };
 
+    // helper function for quick visual outcome overview
     Array.prototype.diff = function(a) {
       return this.filter(function(i) {return !(a.indexOf(i) > -1);});
     };
+
+    $scope.showComments = function(id) {
+      angular.element('#bettle_comment_' + id).toggle();
+    }
   }]);
 
 

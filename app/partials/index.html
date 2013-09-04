@@ -41,8 +41,16 @@
     <div class="span12 text-center">
       Win {{bettle.maker_stake}}€ if {{ bettle | outcome_opponent_sentence }} Lose {{ bettle.opponent_stake}}€ if {{ bettle | outcome_maker_sentence }}
     </div>
-   <div class="span12 text-center" count-down>
-    Expires in: {{bettle | countdown_init }}
+   <div class="span12 text-center">
+    <div class="span9" count-down>
+      {{bettle | countdown_init }}
+    </div>
+    <div class="span3">
+      <a href="" ng-click="showComments('{{ bettle.bettle_id }}');">Comments</a>
+    </div>
+  </div>
+  <div id="bettle_comment_{{ bettle.bettle_id }}" class="span12" ng-hide="true">
+    <div class="fb-comments" data-href="http://adooza.com" data-width="470"></div>
   </div>
 </div>
 </div>
